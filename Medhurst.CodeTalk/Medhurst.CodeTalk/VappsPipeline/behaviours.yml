@@ -1,0 +1,33 @@
+﻿policy:
+  BankAccountInClipboard:
+    conditions:
+      - (eventType='ClipboardChanged' AND clipboardData='Text' AND textContent^='[\d]{8,9}')
+    reactions:
+      - clearClipboard
+      - screenshot: allWindows
+      
+  DLP.PrintScreenPressedInDataApp:
+    conditions:
+      - (eventType='KeyPressed' AND specialKeyName='PrintScreen' AND FocusedWindow=~'$(DataApps)')
+      
+      
+      
+      
+plugins:
+  - type: cron
+    constructor:
+      tasks:
+        converter: cron_task_from_string
+        values:
+          - Name=Weekday;Cron=0 0/5 * * * MON-FRI
+          - Name=Weekend;Cron=0 0/8 * * * SAT-SUN
+    events:
+      - Policies=(TaskName='Weekend');OnTrigger=WeekendTask
+      - Policies=(TaskName='Weekday');OnTrigger=WeekdayTask
+          
+  - type: message_to_log
+    events:
+      - ListenFor=WeekendTask;Policies=(Always='True')
+      - ListenFor=WeekdayTask;Policies=(Always='True')
+      
+      

@@ -10,5 +10,6 @@
   <ItemGroup>
     <Folder Include="Naming\" />
     <Folder Include="LiskovSubstitution\" />
+    <Folder Include="VappsPipeline\" />
   </ItemGroup>
 </Project>
