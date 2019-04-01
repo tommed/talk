@@ -14,7 +14,7 @@
     }
 
     // GOOD: naming of class represent 'how' (implementation detail)
-    public sealed class HttpWebRequest : IWebRequest
+    public sealed class HttpClientWebRequest : IWebRequest
     {
         public async Task<IWebResponse> GetAsync(string url)
         {
